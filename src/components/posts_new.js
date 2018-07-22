@@ -7,10 +7,10 @@ class PostsNew extends Component {
 
   static defaultProps = {};
 
-  renderTitleField(field) {
+  renderField(field) {
     return (
       <div className="form-group">
-        <label>Title</label>
+        <label>{field.label}</label>
         <input className="form-control" type="text" {...field.input} />
       </div>
     );
@@ -19,7 +19,13 @@ class PostsNew extends Component {
   render() {
     return (
       <form>
-        <Field name="title" component={this.renderTitleField} />
+        <Field label="Title" name="title" component={this.renderField} />
+        <Field label="Tags" name="tags" component={this.renderField} />
+        <Field
+          label="Post Content"
+          name="content"
+          component={this.renderField}
+        />
       </form>
     );
   }
