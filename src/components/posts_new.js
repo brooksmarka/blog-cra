@@ -12,13 +12,18 @@ class PostsNew extends Component {
       <div className="form-group">
         <label>{field.label}</label>
         <input className="form-control" type="text" {...field.input} />
+        {field.meta.error}
       </div>
     );
   }
 
+  onSubmit(values) {
+    console.log(values);
+  }
   render() {
+    const { handleSubmit } = this.props;
     return (
-      <form>
+      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field label="Title" name="title" component={this.renderField} />
         <Field
           label="Categories"
@@ -30,6 +35,9 @@ class PostsNew extends Component {
           name="content"
           component={this.renderField}
         />
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
       </form>
     );
   }
@@ -38,18 +46,14 @@ class PostsNew extends Component {
 function validate(values) {
   const errors = {};
 
-  if (values.title.length < 3) {
-    errors.length = "Please enter a title that is larger than 3 characters";
-  }
-
   if (!values.title) {
     errors.title = "Enter a title";
   }
   if (!values.categories) {
     errors.categories = "Enter a category please";
   }
-  if (!values.title) {
-    errors.content = "Enter a title please";
+  if (!values.content) {
+    errors.content = "Enter some content please";
   }
 
   //if errors is empty the form is fine to submit
